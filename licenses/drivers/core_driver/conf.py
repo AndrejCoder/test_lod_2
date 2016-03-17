@@ -1,0 +1,3 @@
+SERVER_SCHEME = 'http'
+SERVER_NAME = 'localhost'
+SERVER_PORT = '8000'
