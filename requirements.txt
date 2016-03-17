@@ -1,0 +1,10 @@
+Django
+markdown
+django-annoying
+django-filter
+djangorestframework
+pip
+psycopg2
+requests
+setuptools
+wsgiref
