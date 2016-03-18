@@ -10,7 +10,8 @@ class Process(models.Model):
     process_type = models.ForeignKey(
         ProcessType,
         verbose_name=u'Тип процесса',
-        db_index=True
+        db_index=True,
+        related_name='processes'
     )
 
     name = models.CharField(max_length=255)

@@ -11,7 +11,7 @@
         {% for process in processes %}
         <tr>
             <td>
-                {{ process.id }} - {{ process.name }} - {{ process.process_type }}
+                {{ process.id }} - {{ process.name }} - {{ process.process_type.name }}
             </td>
         </tr>
         {% endfor %}

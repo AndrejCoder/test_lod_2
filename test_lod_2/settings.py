@@ -97,6 +97,10 @@ DATABASES = {
     },
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+}
+
 # DATABASE_ROUTERS = [
 #     'core.classes.CoreRouter',
 # ]
