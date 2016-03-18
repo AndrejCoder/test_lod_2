@@ -8,11 +8,7 @@ class ProcessTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProcessType
-        fields = (
-            'id',
-            'name',
-            # 'processes'
-        )
+        fields = '__all__'
 
 
 class ProcessSerializer(serializers.ModelSerializer):
@@ -20,8 +16,4 @@ class ProcessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Process
-        fields = (
-            'id',
-            'name',
-            'process_type'
-        )
+        fields = '__all__'

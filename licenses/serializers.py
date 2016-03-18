@@ -7,7 +7,4 @@ from licenses.models import License
 class LicenseSerializer(serializers.ModelSerializer):
     class Meta:
         model = License
-        fields = (
-            'id',
-            'name'
-        )
+        fields = '__all__'
