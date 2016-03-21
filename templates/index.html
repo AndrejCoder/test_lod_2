@@ -7,6 +7,7 @@
 </head>
 <body>
  {% if processes %}
+    <form method="get">
     <table>
         {% for process in processes %}
         <tr>
@@ -16,6 +17,8 @@
         </tr>
         {% endfor %}
     </table>
+    <input type="submit" name="create" value="Создать" />
+    </form>
     {{ process.name }}
 {% endif %}
 </body>

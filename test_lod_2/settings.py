@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'application_1',
     'core',
     'licenses',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework_swagger'
 )
 
 MIDDLEWARE_CLASSES = (

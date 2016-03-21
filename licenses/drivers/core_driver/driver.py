@@ -39,3 +39,13 @@ class ProcessDriver(object):
             print u'Не удалось подключиться к серверу сервиса'
             return []
 
+    def create_process(self):
+        try:
+            requests.post(self.url + reverse('process-list'), data={'name': 'Процесс 88', 'process_type': 1})
+        except ValueError:
+            print u'Неправильный формат ответа от сервиса'
+            return []
+        except requests.ConnectionError:
+            print u'Не удалось подключиться к серверу сервиса'
+            return []
+
