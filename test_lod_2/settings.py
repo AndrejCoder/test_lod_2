@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'application_1',
-    'core',
+    'registries',
     'licenses',
     'rest_framework',
     'rest_framework_swagger'
@@ -82,20 +82,20 @@ WSGI_APPLICATION = 'test_lod_2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test_lod_2_db',
+        'NAME': 'test_lod_2_reg_db',
         'USER': 'lod',
         'PASSWORD': 'qbdhnLs4',
         'HOST': '',
         'PORT': ''
     },
-    'conf': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test_lod_2_conf_db',
-        'USER': 'lod',
-        'PASSWORD': 'qbdhnLs4',
-        'HOST': '',
-        'PORT': ''
-    },
+    # 'conf': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'test_lod_2_conf_db',
+    #     'USER': 'lod',
+    #     'PASSWORD': 'qbdhnLs4',
+    #     'HOST': '',
+    #     'PORT': ''
+    # },
 }
 
 REST_FRAMEWORK = {

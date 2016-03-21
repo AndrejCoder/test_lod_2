@@ -8,19 +8,19 @@ from rest_framework.reverse import reverse
 from licenses.drivers.core_driver import conf
 
 
-class ProcessDriver(object):
+class RegistryDriver(object):
 
     @property
     def url(self):
         return conf.SERVER_SCHEME + '://' + conf.SERVER_NAME + ':' + conf.SERVER_PORT
 
-    def get_processes(self, _filter=None, **kwargs):
+    def get_violations(self, _filter=None):
         try:
             query_params = ''
             if _filter:
                 query_params = '?' + urlencode(_filter)
-            processes = json.loads(requests.get(self.url + reverse('process-list') + query_params).text)
-            return processes
+            violations = json.loads(requests.get(self.url + reverse('violation-list') + query_params).text)
+            return violations
         except ValueError:
             print u'Неправильный формат ответа от сервиса'
             return []
@@ -28,10 +28,10 @@ class ProcessDriver(object):
             print u'Не удалось подключиться к серверу сервиса'
             return []
 
-    def get_process(self, _pk=None, **kwargs):
+    def get_violation(self, _pk=None):
         try:
-            processes = json.loads(requests.get(self.url + reverse('process-detail', kwargs={'pk': _pk})).text)
-            return processes
+            violation = json.loads(requests.get(self.url + reverse('violation-detail', kwargs={'pk': _pk})).text)
+            return violation
         except ValueError:
             print u'Неправильный формат ответа от сервиса'
             return []
@@ -39,9 +39,10 @@ class ProcessDriver(object):
             print u'Не удалось подключиться к серверу сервиса'
             return []
 
-    def create_process(self):
+    def create_violation(self):
         try:
-            requests.post(self.url + reverse('process-list'), data={'name': 'Процесс 88', 'process_type': 1})
+            requests.post(self.url + reverse('violation-list'),
+                          data={'violation': 'Нарушение 100', 'date': '2015-10-30', 'who': 'Петров 1'})
         except ValueError:
             print u'Неправильный формат ответа от сервиса'
             return []
@@ -49,3 +50,24 @@ class ProcessDriver(object):
             print u'Не удалось подключиться к серверу сервиса'
             return []
 
+    def update_violation(self, _pk):
+        try:
+            requests.put(self.url + reverse('violation-detail', kwargs={'pk': _pk}),
+                         data={'violation': 'Нарушение 100', 'date': '2015-10-30', 'who': 'Петров 1'})
+        except ValueError:
+            print u'Неправильный формат ответа от сервиса'
+            return []
+        except requests.ConnectionError:
+            print u'Не удалось подключиться к серверу сервиса'
+            return []
+
+    def update_patch_violation(self, _pk):
+        try:
+            requests.patch(self.url + reverse('violation-detail', kwargs={'pk': _pk}),
+                           data={'violation': 'Нарушение 100'})
+        except ValueError:
+            print u'Неправильный формат ответа от сервиса'
+            return []
+        except requests.ConnectionError:
+            print u'Не удалось подключиться к серверу сервиса'
+            return []

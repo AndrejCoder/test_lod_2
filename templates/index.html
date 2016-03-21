@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="ru">
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="http://example.com/myicon.ico" />
     <title>Старт</title>
 </head>
 <body>
- {% if processes %}
+ {% if violations %}
     <form method="get">
     <table>
-        {% for process in processes %}
+        {% for violation in violations %}
         <tr>
             <td>
-                {{ process.id }} - {{ process.name }} - {{ process.process_type.name }}
+                {{ violation.id }} - {{ violation.violation }} - {{ violation.date }} - {{ violation.who }}
             </td>
         </tr>
         {% endfor %}
     </table>
     <input type="submit" name="create" value="Создать" />
+    <input type="submit" name="update" value="Изменить" />
+    <input type="submit" name="update_patch" value="Изменить часть" />
     </form>
-    {{ process.name }}
 {% endif %}
 </body>
 </html>
