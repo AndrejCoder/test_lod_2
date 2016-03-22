@@ -1,10 +1,11 @@
+from django.conf import settings
 from rest_framework import serializers
 
 from registries.models import ViolationRegistry
 
 
 class ViolationRegistrySerializer(serializers.ModelSerializer):
-    date = serializers.DateField(format='%d.%m.%Y')
+    date = serializers.DateField(format='%d.%m.%Y', input_formats=settings.DATE_INPUT_FORMATS)
 
     class Meta:
         model = ViolationRegistry

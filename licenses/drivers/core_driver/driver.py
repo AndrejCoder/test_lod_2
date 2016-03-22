@@ -61,10 +61,10 @@ class RegistryDriver(object):
             print u'Не удалось подключиться к серверу сервиса'
             return []
 
-    def update_patch_violation(self, _pk):
+    def update_partial_violation(self, _pk):
         try:
             requests.patch(self.url + reverse('violation-detail', kwargs={'pk': _pk}),
-                           data={'violation': 'Нарушение 100'})
+                           data={'violation': 'Нарушение 007'})
         except ValueError:
             print u'Неправильный формат ответа от сервиса'
             return []

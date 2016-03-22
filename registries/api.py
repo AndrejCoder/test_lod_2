@@ -1,5 +1,8 @@
-from rest_framework import viewsets
+# coding: utf-8
+from rest_framework import viewsets, filters
+from rest_framework.pagination import PageNumberPagination
 
+from registries.filters import ViolationRegistryFilter
 from registries.models import ViolationRegistry
 from registries.serializers import ViolationRegistrySerializer
 
@@ -7,10 +10,9 @@ from registries.serializers import ViolationRegistrySerializer
 class ViolationRegistryViewset(viewsets.ModelViewSet):
 
     serializer_class = ViolationRegistrySerializer
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
+    filter_class = ViolationRegistryFilter
+    queryset = ViolationRegistry.objects.all()
 
-    def get_queryset(self):
-        filters = {}
-        for key, value in self.request.query_params.dict().iteritems():
-            if key in self.get_serializer(data=self.request.data).get_fields().keys():
-                filters[key] = value
-        return ViolationRegistry.objects.filter(**filters)
+    pagination_class = PageNumberPagination
+    pagination_class.page_size_query_param = 'page_size'

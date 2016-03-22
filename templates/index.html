@@ -9,7 +9,7 @@
  {% if violations %}
     <form method="get">
     <table>
-        {% for violation in violations %}
+        {% for violation in violations.results %}
         <tr>
             <td>
                 {{ violation.id }} - {{ violation.violation }} - {{ violation.date }} - {{ violation.who }}
@@ -17,6 +17,7 @@
         </tr>
         {% endfor %}
     </table>
+    {{ violation.date }}
     <input type="submit" name="create" value="Создать" />
     <input type="submit" name="update" value="Изменить" />
     <input type="submit" name="update_patch" value="Изменить часть" />

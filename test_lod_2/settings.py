@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+import sys
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -99,8 +101,11 @@ DATABASES = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+    # 'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
+    'PAGE_SIZE': sys.maxint
 }
+
+DATE_INPUT_FORMATS = ['%d.%m.%Y', '%Y-%m-%d']
 
 # DATABASE_ROUTERS = [
 #     'core.classes.CoreRouter',

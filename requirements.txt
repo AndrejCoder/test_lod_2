@@ -3,6 +3,7 @@ markdown
 django-annoying
 django-filter
 djangorestframework
+django-rest-swagger
 pip
 psycopg2
 requests

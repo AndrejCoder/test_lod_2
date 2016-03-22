@@ -14,6 +14,6 @@ def processes(request):
         pd.update_violation(4)
 
     if request.GET and request.GET.get('update_patch'):
-        pd.update_patch_violation(1)
-    ctx = {'violations': pd.get_violations(request.GET.dict()), 'process': pd.get_violation(_pk=request.GET.get('id'))}
+        pd.update_partial_violation(9)
+    ctx = {'violations': pd.get_violations(request.GET.dict()), 'violation': pd.get_violation(_pk=request.GET.get('id'))}
     return ctx
