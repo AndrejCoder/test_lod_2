@@ -10,7 +10,8 @@ from registries.serializers import ViolationRegistrySerializer
 class ViolationRegistryViewset(viewsets.ModelViewSet):
 
     serializer_class = ViolationRegistrySerializer
-    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
+    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend, filters.OrderingFilter)
+    search_fields = ('id', 'violation')
     filter_class = ViolationRegistryFilter
     queryset = ViolationRegistry.objects.all()
 

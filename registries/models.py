@@ -4,6 +4,6 @@ from django.db import models
 
 class ViolationRegistry(models.Model):
 
-    violation = models.TextField()
-    date = models.DateField()
-    who = models.CharField(max_length=255)
+    violation = models.TextField(verbose_name='Нарушение')
+    date = models.DateField(verbose_name='Дата нарушения')
+    who = models.CharField(verbose_name='Нарушитель', max_length=255)
