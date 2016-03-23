@@ -13,7 +13,7 @@ class ProcessViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         filters = {}
-        for key, value in self.request.query_params.dict().iteritems():
+        for key, value in iter(self.request.query_params.dict().items()):
             if key in self.get_serializer(data=self.request.data).get_fields().keys():
                 filters[key] = value
         return Process.objects.filter(**filters)

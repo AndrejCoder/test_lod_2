@@ -1,6 +1,6 @@
 # coding: utf-8
 import json
-from urllib import urlencode
+from urllib.parse import urlencode
 
 import requests
 from rest_framework.reverse import reverse
@@ -22,10 +22,10 @@ class ProcessDriver(object):
             processes = json.loads(requests.get(self.url + reverse('process-list') + query_params).text)
             return processes
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
 
     def get_process(self, _pk=None, **kwargs):
@@ -33,19 +33,18 @@ class ProcessDriver(object):
             processes = json.loads(requests.get(self.url + reverse('process-detail', kwargs={'pk': _pk})).text)
             return processes
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
 
     def create_process(self):
         try:
             requests.post(self.url + reverse('process-list'), data={'name': 'Процесс 88', 'process_type': 1})
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
-
