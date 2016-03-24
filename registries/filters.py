@@ -8,4 +8,4 @@ class ViolationRegistryFilter(filters.FilterSet):
 
     class Meta:
         model = ViolationRegistry
-        fields = ['id', 'violation', 'date', 'who']
+        fields = ['id', 'violation', 'date', 'who', 'json_data']

@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'test_lod_2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test_lod_2_reg_db',
+        'NAME': 'test-lod-2_db',
         'USER': 'lod',
         'PASSWORD': 'qbdhnLs4',
         'HOST': '',
-        'PORT': ''
+        'PORT': '5433'
     },
     # 'conf': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -102,7 +102,7 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     # 'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
-    'PAGE_SIZE': sys.maxint
+    'PAGE_SIZE': sys.maxsize
 }
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y', '%Y-%m-%d']

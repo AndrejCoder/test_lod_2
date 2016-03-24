@@ -1,6 +1,6 @@
 # coding: utf-8
 import json
-from urllib import urlencode
+from urllib.parse import urlencode
 
 import requests
 from rest_framework.reverse import reverse
@@ -22,10 +22,10 @@ class RegistryDriver(object):
             violations = json.loads(requests.get(self.url + reverse('violation-list') + query_params).text)
             return violations
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
 
     def get_violation(self, _pk=None):
@@ -33,10 +33,10 @@ class RegistryDriver(object):
             violation = json.loads(requests.get(self.url + reverse('violation-detail', kwargs={'pk': _pk})).text)
             return violation
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
 
     def create_violation(self):
@@ -44,10 +44,10 @@ class RegistryDriver(object):
             requests.post(self.url + reverse('violation-list'),
                           data={'violation': 'Нарушение 100', 'date': '2015-10-30', 'who': 'Петров 1'})
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
 
     def update_violation(self, _pk):
@@ -55,10 +55,10 @@ class RegistryDriver(object):
             requests.put(self.url + reverse('violation-detail', kwargs={'pk': _pk}),
                          data={'violation': 'Нарушение 100', 'date': '2015-10-30', 'who': 'Петров 1'})
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
 
     def update_partial_violation(self, _pk):
@@ -66,8 +66,8 @@ class RegistryDriver(object):
             requests.patch(self.url + reverse('violation-detail', kwargs={'pk': _pk}),
                            data={'violation': 'Нарушение 007'})
         except ValueError:
-            print u'Неправильный формат ответа от сервиса'
+            print(u'Неправильный формат ответа от сервиса')
             return []
         except requests.ConnectionError:
-            print u'Не удалось подключиться к серверу сервиса'
+            print(u'Не удалось подключиться к серверу сервиса')
             return []
