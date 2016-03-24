@@ -8,3 +8,4 @@ pip
 psycopg2
 requests
 setuptools
+wheel

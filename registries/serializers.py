@@ -1,13 +1,12 @@
-from django.conf import settings
 from rest_framework import serializers
 
-from registries.models import ViolationRegistry
+from registries.fields import CustomJSONField
+from registries.models import Registry
 
 
-class ViolationRegistrySerializer(serializers.ModelSerializer):
-    date = serializers.DateField(format='%d.%m.%Y', input_formats=settings.DATE_INPUT_FORMATS)
-    json_data = serializers.JSONField()
+class RegistrySerializer(serializers.ModelSerializer):
+    json_data = CustomJSONField()
 
     class Meta:
-        model = ViolationRegistry
+        model = Registry
         fields = '__all__'

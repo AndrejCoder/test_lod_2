@@ -16,14 +16,13 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from licenses.views import processes
+from application_1.views import processes
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', processes, name='index'),
 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^licenses/', include('licenses.urls')),
     url(r'^registries/', include('registries.urls')),
 
     url(r'^docs/', include('rest_framework_swagger.urls'))

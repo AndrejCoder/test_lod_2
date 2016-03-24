@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'application_1',
     'registries',
-    'licenses',
     'rest_framework',
     'rest_framework_swagger'
 )

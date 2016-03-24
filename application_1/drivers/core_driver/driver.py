@@ -5,7 +5,7 @@ from urllib.parse import urlencode
 import requests
 from rest_framework.reverse import reverse
 
-from licenses.drivers.core_driver import conf
+from application_1.drivers.core_driver import conf
 
 
 class RegistryDriver(object):
@@ -14,12 +14,12 @@ class RegistryDriver(object):
     def url(self):
         return conf.SERVER_SCHEME + '://' + conf.SERVER_NAME + ':' + conf.SERVER_PORT
 
-    def get_violations(self, _filter=None):
+    def get_reg_items(self, _filter=None):
         try:
             query_params = ''
             if _filter:
                 query_params = '?' + urlencode(_filter)
-            violations = json.loads(requests.get(self.url + reverse('violation-list') + query_params).text)
+            violations = json.loads(requests.get(self.url + reverse('registry-list') + query_params).text)
             return violations
         except ValueError:
             print(u'Неправильный формат ответа от сервиса')
@@ -28,9 +28,9 @@ class RegistryDriver(object):
             print(u'Не удалось подключиться к серверу сервиса')
             return []
 
-    def get_violation(self, _pk=None):
+    def get_reg_item(self, _pk=None):
         try:
-            violation = json.loads(requests.get(self.url + reverse('violation-detail', kwargs={'pk': _pk})).text)
+            violation = json.loads(requests.get(self.url + reverse('registry-detail', kwargs={'pk': _pk})).text)
             return violation
         except ValueError:
             print(u'Неправильный формат ответа от сервиса')
@@ -39,10 +39,10 @@ class RegistryDriver(object):
             print(u'Не удалось подключиться к серверу сервиса')
             return []
 
-    def create_violation(self):
+    def create_reg_item(self):
         try:
-            requests.post(self.url + reverse('violation-list'),
-                          data={'violation': 'Нарушение 100', 'date': '2015-10-30', 'who': 'Петров 1'})
+            requests.post(self.url + reverse('registry-list'),
+                          data={'json_data': '{"k1": 1, "k2": 2, "k3": 3}'})
         except ValueError:
             print(u'Неправильный формат ответа от сервиса')
             return []
@@ -50,9 +50,9 @@ class RegistryDriver(object):
             print(u'Не удалось подключиться к серверу сервиса')
             return []
 
-    def update_violation(self, _pk):
+    def update_reg_item(self, _pk):
         try:
-            requests.put(self.url + reverse('violation-detail', kwargs={'pk': _pk}),
+            requests.put(self.url + reverse('registry-detail', kwargs={'pk': _pk}),
                          data={'violation': 'Нарушение 100', 'date': '2015-10-30', 'who': 'Петров 1'})
         except ValueError:
             print(u'Неправильный формат ответа от сервиса')
@@ -61,9 +61,9 @@ class RegistryDriver(object):
             print(u'Не удалось подключиться к серверу сервиса')
             return []
 
-    def update_partial_violation(self, _pk):
+    def update_partial_reg_item(self, _pk):
         try:
-            requests.patch(self.url + reverse('violation-detail', kwargs={'pk': _pk}),
+            requests.patch(self.url + reverse('registry-detail', kwargs={'pk': _pk}),
                            data={'violation': 'Нарушение 007'})
         except ValueError:
             print(u'Неправильный формат ответа от сервиса')

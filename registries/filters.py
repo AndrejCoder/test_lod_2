@@ -1,11 +1,11 @@
 # coding: utf-8
 from rest_framework import filters
 
-from registries.models import ViolationRegistry
+from registries.models import Registry
 
 
-class ViolationRegistryFilter(filters.FilterSet):
+class RegistryFilter(filters.FilterSet):
 
     class Meta:
-        model = ViolationRegistry
-        fields = ['id', 'violation', 'date', 'who', 'json_data']
+        model = Registry
+        fields = ['id', 'json_data']
