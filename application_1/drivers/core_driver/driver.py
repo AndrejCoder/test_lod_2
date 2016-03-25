@@ -64,7 +64,7 @@ class RegistryDriver(object):
     def update_partial_reg_item(self, _pk):
         try:
             requests.patch(self.url + reverse('registry-detail', kwargs={'pk': _pk}),
-                           data={'violation': 'Нарушение 007'})
+                           data={'json_data': '{"k2": 33333}'})
         except ValueError:
             print(u'Неправильный формат ответа от сервиса')
             return []

@@ -20,6 +20,6 @@ def processes(request):
         pd.update_reg_item(4)
 
     if request.GET and request.GET.get('update_patch'):
-        pd.update_partial_reg_item(9)
+        pd.update_partial_reg_item(3)
     ctx = {'reg_items': pd.get_reg_items(request.GET.dict()), 'reg_item': pd.get_reg_item(_pk=request.GET.get('id'))}
     return ctx
