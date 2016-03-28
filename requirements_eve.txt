@@ -1,0 +1,10 @@
+Django
+django-annoying
+pip
+psycopg2
+eve
+eve-sqlalchemy
+requests
+setuptools
+sqlalchemy
+wheel
