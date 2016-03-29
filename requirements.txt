@@ -4,6 +4,7 @@ django-annoying
 django-filter
 djangorestframework
 django-rest-swagger
+django-cors-headers
 pip
 psycopg2
 requests
