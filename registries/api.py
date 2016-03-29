@@ -3,7 +3,7 @@ from rest_framework import viewsets, filters
 
 from registries.filters import RegistryFilter
 from registries.models import Registry
-from registries.paginations import PageNumberDataPagination
+from registries.paginations import PageNumberJSONDataPagination
 from registries.serializers import RegistrySerializer
 
 
@@ -15,5 +15,6 @@ class RegistryViewset(viewsets.ModelViewSet):
     filter_class = RegistryFilter
     queryset = Registry.objects.all()
 
-    pagination_class = PageNumberDataPagination
-    pagination_class.page_size_query_param = 'page_size'
+    pagination_class = PageNumberJSONDataPagination
+    pagination_class.page_size = 20
+    pagination_class.page_size_query_param = 'rows'

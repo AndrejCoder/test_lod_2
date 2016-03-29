@@ -42,10 +42,12 @@ INSTALLED_APPS = (
     'application_1',
     'registries',
     'rest_framework',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
+    'corsheaders'
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -101,7 +103,7 @@ DATABASES = {
 
 REST_FRAMEWORK = {
     # 'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
-    'PAGE_SIZE': sys.maxsize
+    'PAGE_SIZE': 20
 }
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y', '%Y-%m-%d']
@@ -129,3 +131,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ORIGIN_ALLOW_ALL = True
