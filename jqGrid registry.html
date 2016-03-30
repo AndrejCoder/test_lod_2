@@ -72,16 +72,16 @@
                 { edit: true, add: true, del: true, search: false, refresh: false, view: false},
                 {
                     mtype: 'PATCH',
-                    closeAfterEdit: true,
                     onclickSubmit: function (params, posdata) {
                         // first test something and then change the URL with
                         params.url = 'http://127.0.0.1:8000/registries/registry/' + jqGrid.jqGrid('getGridParam',"selrow") + '/';
-                    }
+                    },
+                    closeAfterEdit: true
                 },
                 {
-                    closeAfterAdd: true,
+                    mtype: 'POST',
                     url: 'http://127.0.0.1:8000/registries/registry/',
-                    mtype: 'POST'
+                    closeAfterAdd: true
                 },
                 {
                     mtype: 'DELETE',
