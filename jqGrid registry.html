@@ -15,9 +15,9 @@
     <script type="text/ecmascript" src="http://www.guriddo.net/demo/js/ui.multiselect.js"></script>
     <!-- This is the localization file of the grid controlling messages, labels, etc.
     <!-- A link to a jQuery UI ThemeRoller theme, more than 22 built-in and many more custom -->
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/jquery-ui.css" />
     <!-- The link to the CSS that the grid needs -->
-    <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/trirand/ui.jqgrid.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/trirand/ui.jqgrid.css" />
     <!-- A link to a jQuery multiselect css -->
     <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/ui.multiselect.css" />
     <meta charset="utf-8" />
@@ -36,7 +36,7 @@
                 mtype: "GET",
                 datatype: "json",
                 colModel: [
-		    { label: '№', name: 'id', key: true, width: 75 },
+		            { label: '№', name: 'id', key: true, width: 75 },
                     { label: 'Фамилия', name: 'last_name', width: 75, editable: true },
                     { label: 'Имя', name: 'first_name', width: 150, editable: true },
                     { label: 'Отчество', name: 'second_name', width: 150, editable: true },
@@ -56,42 +56,53 @@
 		            },
                     { label: 'Место рождения', name: 'place', width: 150, editable: true, edittype: "textarea" }
                 ],
-		viewrecords: true,
+		        viewrecords: true,
                 width: 780,
                 height: 250,
                 rowNum: 2,
                 pager: "#jqGridPager",
-		caption: 'Очень полезный реестр'
+		        caption: 'Очень полезный реестр!'
             });
 
-        jqGrid.jqGrid('bindKeys');
+            jqGrid.jqGrid('bindKeys');
 
 
-        jqGrid.navGrid('#jqGridPager',
-                    // the buttons to appear on the toolbar of the grid
-                    { edit: true, add: true, del: true, search: false, refresh: false, view: false},
-                    {
-                        url: 'http://127.0.0.1:8000/registries/registry/2/',
-                        mtype: 'PATCH'
-                    },
-                    {
-
+            jqGrid.navGrid('#jqGridPager',
+                // the buttons to appear on the toolbar of the grid
+                { edit: true, add: true, del: true, search: false, refresh: false, view: false},
+                {
+                    mtype: 'PATCH',
+                    closeAfterEdit: true,
+                    onclickSubmit: function (params, posdata) {
+                        // first test something and then change the URL with
+                        params.url = 'http://127.0.0.1:8000/registries/registry/' + jqGrid.jqGrid('getGridParam',"selrow") + '/';
                     }
-);
+                },
+                {
+                    closeAfterAdd: true,
+                    url: 'http://127.0.0.1:8000/registries/registry/',
+                    mtype: 'POST'
+                },
+                {
+                    mtype: 'DELETE',
+                    onclickSubmit: function (params, posdata) {
+                        // first test something and then change the URL with
+                        params.url = 'http://127.0.0.1:8000/registries/registry/' + jqGrid.jqGrid('getGridParam',"selrow") + '/';
+                    }
+                }
+            );
 
-        jqGrid.navButtonAdd('#jqGridPager',
-            {
+            jqGrid.navButtonAdd('#jqGridPager', {
                 buttonicon: "ui-icon-calculator",
                 title: "Column chooser",
                 caption: "",
                 position: "last",
                 onClickButton: function() {
-            // call the column chooser method
-            $("#jqGrid").jqGrid('columnChooser');
-            }
+                    // call the column chooser method
+                    $("#jqGrid").jqGrid('columnChooser');
+                }
             });
-            });
- 
+        });
    </script>
     <!-- End of code related to code tabs -->
 </body>
