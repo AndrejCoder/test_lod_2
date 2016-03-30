@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+    <!-- The jQuery library is a prerequisite for all jqSuite products -->
+    <script type="text/ecmascript" src="http://www.guriddo.net/demo/js/jquery.min.js"></script>
+    <!-- This is the Javascript file of jQuery UI -->   
+    <script type="text/ecmascript" src="http://www.guriddo.net/demo/js/jquery-ui.min.js"></script>	
+    <!-- We support more than 40 localizations -->
+    <script type="text/ecmascript" src="http://www.guriddo.net/demo/js/trirand/i18n/grid.locale-ru.js"></script>
+    <!-- This is the Javascript file of jqGrid -->   
+    <script type="text/ecmascript" src="http://www.guriddo.net/demo/js/trirand/jquery.jqGrid.min.js"></script>
+    <!-- This is the multiselect file. It should be loaded after jqueryui and befor the grid  -->   
+    <script type="text/ecmascript" src="http://www.guriddo.net/demo/js/ui.multiselect.js"></script>
+    <!-- This is the localization file of the grid controlling messages, labels, etc.
+    <!-- A link to a jQuery UI ThemeRoller theme, more than 22 built-in and many more custom -->
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/jquery-ui.css">
+    <!-- The link to the CSS that the grid needs -->
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/trirand/ui.jqgrid.css">
+    <!-- A link to a jQuery multiselect css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="http://www.guriddo.net/demo/css/ui.multiselect.css" />
+    <meta charset="utf-8" />
+    <title>Реестр</title>
+</head>
+<body>
+
+    <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
+
+    <script type="text/javascript"> 
+        $(document).ready(function () {
+            var jqGrid = $("#jqGrid");
+            jqGrid.jqGrid({
+                url: 'http://127.0.0.1:8000/registries/registry/',
+                mtype: "GET",
+                datatype: "json",
+                colModel: [
+		    { label: '№', name: 'id', key: true, width: 75 },
+                    { label: 'Фамилия', name: 'last_name', width: 75, editable: true },
+                    { label: 'Имя', name: 'first_name', width: 150, editable: true },
+                    { label: 'Отчество', name: 'second_name', width: 150, editable: true },
+                    { label: 'Дата рождения', name: 'birthday', width: 150, editable: true, edittype:"text",
+                        editoptions: {
+                            // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
+                            // use it to place a third party control to customize the toolbar
+                            dataInit: function (element) {
+                                $(element).datepicker({
+                                    id: 'birthday_datePicker',
+                                    dateFormat: 'dd.mm.yy',
+                                    //minDate: new Date(2010, 0, 1),
+                                    maxDate: new Date(2020, 0, 1)
+                                });
+                            }
+                        }
+		            },
+                    { label: 'Место рождения', name: 'place', width: 150, editable: true, edittype: "textarea" }
+                ],
+		viewrecords: true,
+                width: 780,
+                height: 250,
+                rowNum: 2,
+                pager: "#jqGridPager",
+		caption: 'Очень полезный реестр'
+            });
+
+        jqGrid.jqGrid('bindKeys');
+
+
+        jqGrid.navGrid('#jqGridPager',
+                    // the buttons to appear on the toolbar of the grid
+                    { edit: true, add: true, del: true, search: false, refresh: false, view: false},
+                    {
+                        url: 'http://127.0.0.1:8000/registries/registry/2/',
+                        mtype: 'PATCH'
+                    },
+                    {
+
+                    }
+);
+
+        jqGrid.navButtonAdd('#jqGridPager',
+            {
+                buttonicon: "ui-icon-calculator",
+                title: "Column chooser",
+                caption: "",
+                position: "last",
+                onClickButton: function() {
+            // call the column chooser method
+            $("#jqGrid").jqGrid('columnChooser');
+            }
+            });
+            });
+ 
+   </script>
+    <!-- End of code related to code tabs -->
+</body>
+</html>
