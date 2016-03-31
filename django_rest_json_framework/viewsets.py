@@ -32,7 +32,7 @@ class ModelJSONViewSet(mixins.CreateModelMixin,
     NO_JSON_FIELDS = ['id', ]
 
     def modify_request_data(self, req_data):
-        request_data = dict(req_data)
+        request_data = req_data.dict()
         data_querydict = QueryDict('', mutable=True)
         data_dict = {self.JSON_FIELD: {}}
         for no_json_field in self.NO_JSON_FIELDS:

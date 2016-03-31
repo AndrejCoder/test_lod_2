@@ -69,7 +69,7 @@
 
             jqGrid.navGrid('#jqGridPager',
                 // the buttons to appear on the toolbar of the grid
-                { edit: true, add: true, del: true, search: false, refresh: false, view: false},
+                { edit: true, add: true, del: true, search: true, refresh: false, view: false},
                 {
                     mtype: 'PATCH',
                     onclickSubmit: function (params, posdata) {
@@ -89,6 +89,9 @@
                         // first test something and then change the URL with
                         params.url = 'http://127.0.0.1:8000/registries/registry/' + jqGrid.jqGrid('getGridParam',"selrow") + '/';
                     }
+                },
+                {
+                    multipleSearch: true
                 }
             );
 

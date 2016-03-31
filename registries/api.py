@@ -1,6 +1,7 @@
 # coding: utf-8
 from rest_framework import filters
 
+from django_rest_json_framework.backends import JqGridDjangoFilterBackend
 from django_rest_json_framework.viewsets import ModelJSONViewSet
 from registries.filters import RegistryFilter
 from registries.models import Registry
@@ -11,7 +12,7 @@ from registries.serializers import RegistrySerializer
 class RegistryViewset(ModelJSONViewSet):
 
     serializer_class = RegistrySerializer
-    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend, filters.OrderingFilter)
+    filter_backends = (filters.SearchFilter, JqGridDjangoFilterBackend, filters.OrderingFilter)
     search_fields = ('id', 'json_data')
     filter_class = RegistryFilter
     queryset = Registry.objects.all()
