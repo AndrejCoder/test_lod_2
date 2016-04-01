@@ -1,75 +1,64 @@
-import django_filters
-from django.template import loader
-from rest_framework.compat import template_render
-from rest_framework.filters import BaseFilterBackend, FilterSet, filter_template
+import json
 
-from registries.models import Registry
+from rest_framework.filters import DjangoFilterBackend
 
 
-class JqGridDjangoFilterBackend(BaseFilterBackend):
+class JqGridDjangoFilterBackend(DjangoFilterBackend):
     """
-    A filter backend that uses django-filter.
+    Адаптер фильтрации JqGrid для Django REST Framework
     """
-    LOOKUPS_JQGRID_DJANGO = {
-        'eq': 'iexact',
-        'bw': 'istartswith',
-        'ew': 'iendswith',
-        'cn': 'icontains',
-        'nu': 'isnull'
+    LOOKUPS_JQGRID = {
+        'eq': {'op': ' = ', 'value': '%s'},
+        'ne': {'op': ' != ', 'value': '%s'},
+        'bw': {'op': ' ILIKE ', 'value': '%s%%%%'},
+        'bn': {'op': ' NOT ILIKE ', 'value': '%s%%%%'},
+        'ew': {'op': ' ILIKE ', 'value': '%%%%%s'},
+        'en': {'op': ' NOT ILIKE ', 'value': '%%%%%s'},
+        'cn': {'op': ' ILIKE ', 'value': '%%%%%s%%%%'},
+        'nc': {'op': ' NOT ILIKE ', 'value': '%%%%%s%%%%'},
+        'nu': {'op': ' IS NULL', 'value': '%s'},
+        'nn': {'op': ' IS NOT NULL', 'value': '%s'},
+        'in': {'op': ' IN ', 'value': '%s'},
+        'ni': {'op': ' NOT IN ', 'value': '%s'}
     }
 
-    default_filter_set = FilterSet
-    template = filter_template
+    UPPER_OPS = ('eq', 'ne')
 
-    def __init__(self):
-        assert django_filters, 'Using DjangoFilterBackend, but django-filter is not installed'
+    def left_where_query(self, filter_rule, view):
+        lwq = view.JSON_FIELD + '::json->>\'' + filter_rule.get('field') + '\''
+        if filter_rule.get('op') in self.UPPER_OPS:
+            lwq = 'UPPER(' + lwq + ')'
+        return lwq
 
-    def get_filter_class(self, view, queryset=None):
-        """
-        Return the django-filters `FilterSet` used to filter the queryset.
-        """
-        filter_class = getattr(view, 'filter_class', None)
-        filter_fields = getattr(view, 'filter_fields', None)
+    def op_where_query(self, filter_rule):
+        return self.LOOKUPS_JQGRID.get(filter_rule.get('op')).get('op')
 
-        if filter_class:
-            filter_model = filter_class.Meta.model
+    def right_where_query(self, filter_rule):
+        rwq = filter_rule.get('data')
+        if filter_rule.get('op') in ('nu', 'nn'):
+            rwq = ''
+        rwq = self.LOOKUPS_JQGRID.get(filter_rule.get('op')).get('value') % rwq
+        if filter_rule.get('op') not in ('nu', 'nn'):
+            rwq = '\'' + rwq + '\''
+        if filter_rule.get('op') in self.UPPER_OPS:
+            rwq = 'UPPER(' + rwq + ')'
+        return rwq
 
-            assert issubclass(queryset.model, filter_model), \
-                'FilterSet model %s does not match queryset model %s' % \
-                (filter_model, queryset.model)
-
-            return filter_class
-
-        if filter_fields:
-            class AutoFilterSet(self.default_filter_set):
-                class Meta:
-                    model = queryset.model
-                    fields = filter_fields
-
-            return AutoFilterSet
-
-        return None
+    def sql_where_query(self, filter_rule, view):
+        return self.left_where_query(filter_rule, view) + self.op_where_query(filter_rule) + self.right_where_query(
+            filter_rule)
 
     def filter_queryset(self, request, queryset, view):
-        filter_class = self.get_filter_class(view, queryset)
+        filter_list = list()
 
-        qs1 = Registry.objects.filter(json_data__kvcontains={'first_name': 'Пе'})
-        qs2 = Registry.objects.filter(id__icontains=2)
+        filters = request.query_params.dict().get('filters')
+        if filters:
+            filters_dict = json.loads(request.query_params.dict().get('filters'))
+            filter_rules = filters_dict.get('rules')
+            for filter_rule in filter_rules:
+                filter_list.append(self.sql_where_query(filter_rule, view))
+            group_op = ' ' + filters_dict.get('groupOp') + ' '
+            sql_query = group_op.join(filter_list)
+            queryset = queryset.extra(where=[sql_query])
 
-        print(qs1)
-
-        if filter_class:
-            return filter_class(request.query_params, queryset=queryset).qs
-
-        return queryset
-
-    def to_html(self, request, queryset, view):
-        filter_class = self.get_filter_class(view, queryset)
-        if not filter_class:
-            return None
-        filter_instance = filter_class(request.query_params, queryset=queryset)
-        context = {
-            'filter': filter_instance
-        }
-        template = loader.get_template(self.template)
-        return template_render(template, context)
+        return super().filter_queryset(request, queryset, view)
