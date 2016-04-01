@@ -1,11 +1,11 @@
 # coding: utf-8
 from rest_framework import filters
 
-from django_rest_json_framework.backends import JqGridDjangoFilterBackend
-from django_rest_json_framework.viewsets import ModelJSONViewSet
+from jqgrid_django_rest_framework.backends import JqGridDjangoFilterBackend
+from jqgrid_django_rest_framework.paginations import JqGridPageNumberPagination
+from jqgrid_django_rest_framework.viewsets import ModelJSONViewSet
 from registries.filters import RegistryFilter
 from registries.models import Registry
-from registries.paginations import PageNumberJSONDataPagination
 from registries.serializers import RegistrySerializer
 
 
@@ -17,6 +17,6 @@ class RegistryViewset(ModelJSONViewSet):
     filter_class = RegistryFilter
     queryset = Registry.objects.all()
 
-    pagination_class = PageNumberJSONDataPagination
+    pagination_class = JqGridPageNumberPagination
     pagination_class.page_size = 20
     pagination_class.page_size_query_param = 'rows'

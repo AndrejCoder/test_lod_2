@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from django_rest_json_framework.fields import CustomJSONField
+from jqgrid_django_rest_framework.fields import CustomJSONField
 from registries.models import Registry
 
 

@@ -4,7 +4,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 
-class PageNumberJSONDataPagination(PageNumberPagination):
+class JqGridPageNumberPagination(PageNumberPagination):
 
     JSON_FIELD = 'json_data'
 
