@@ -3,13 +3,13 @@ from rest_framework import filters
 
 from jqgrid_django_rest_framework.backends import JqGridDjangoFilterBackend
 from jqgrid_django_rest_framework.paginations import JqGridPageNumberPagination
-from jqgrid_django_rest_framework.viewsets import ModelJSONViewSet
+from jqgrid_django_rest_framework.viewsets import JqGridModelViewSet
 from registries.filters import RegistryFilter
 from registries.models import Registry
 from registries.serializers import RegistrySerializer
 
 
-class RegistryViewset(ModelJSONViewSet):
+class RegistryViewset(JqGridModelViewSet):
 
     serializer_class = RegistrySerializer
     filter_backends = (filters.SearchFilter, JqGridDjangoFilterBackend, filters.OrderingFilter)

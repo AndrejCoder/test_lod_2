@@ -6,7 +6,7 @@ from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
 
-class GenericJSONViewSet(GenericViewSet):
+class JqGridGenericViewSet(GenericViewSet):
 
     def get_serializer(self, *args, **kwargs):
         """
@@ -18,12 +18,23 @@ class GenericJSONViewSet(GenericViewSet):
         return super().get_serializer(*args, **kwargs)
 
 
-class ModelJSONViewSet(mixins.CreateModelMixin,
-                       mixins.RetrieveModelMixin,
-                       mixins.UpdateModelMixin,
-                       mixins.DestroyModelMixin,
-                       mixins.ListModelMixin,
-                       GenericJSONViewSet):
+class JqGridListModelMixin(mixins.ListModelMixin):
+
+    ORDER_DIRECTION = {
+        'asc': '%s',
+        'desc': '-%s'
+    }
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+
+class JqGridModelViewSet(mixins.CreateModelMixin,
+                         mixins.RetrieveModelMixin,
+                         mixins.UpdateModelMixin,
+                         mixins.DestroyModelMixin,
+                         JqGridListModelMixin,
+                         JqGridGenericViewSet):
     """
     A viewset that provides default `create()`, `retrieve()`, `update()`,
     `partial_update()`, `destroy()` and `list()` actions.

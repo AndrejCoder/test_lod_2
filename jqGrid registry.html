@@ -36,11 +36,11 @@
                 mtype: "GET",
                 datatype: "json",
                 colModel: [
-		            { label: '№', name: 'id', key: true, width: 75 },
-                    { label: 'Фамилия', name: 'last_name', width: 75, editable: true },
-                    { label: 'Имя', name: 'first_name', width: 150, editable: true },
-                    { label: 'Отчество', name: 'second_name', width: 150, editable: true },
-                    { label: 'Дата рождения', name: 'birthday', width: 150, editable: true, edittype:"text",
+		            { label: '№', name: 'id', key: true, width: 75, formatter: "integer" },
+                    { label: 'Фамилия', name: 'last_name', width: 75, editable: true, formatter: "string" },
+                    { label: 'Имя', name: 'first_name', width: 150, editable: true, formatter: "string" },
+                    { label: 'Отчество', name: 'second_name', width: 150, editable: true, formatter: "string" },
+                    { label: 'Дата рождения', name: 'birthday', width: 150, editable: true, edittype:"text", formatter: "date", formatoptions: {srcformat: 'd.m.Y', newformat: 'd.m.Y', defaultValue:null},
                         editoptions: {
                             // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
                             // use it to place a third party control to customize the toolbar
@@ -52,16 +52,33 @@
                                     maxDate: new Date(2020, 0, 1)
                                 });
                             }
+                        }, sorttype:'date', searchoptions: {
+                            // dataInit is the client-side event that fires upon initializing the toolbar search field for a column
+                            // use it to place a third party control to customize the toolbar
+                            dataInit: function (element) {
+                                $(element).datepicker({
+                                    id: 'orderDate_datePicker',
+                                    dateFormat: 'dd.mm.yy',
+                                    //minDate: new Date(2010, 0, 1),
+                                    maxDate: new Date(2020, 0, 1),
+                                    showOn: 'focus'
+                                });
+                            }
                         }
 		            },
-                    { label: 'Место рождения', name: 'place', width: 150, editable: true, edittype: "textarea" }
+                    { label: 'Место рождения', name: 'place', width: 150, editable: true, edittype: "textarea", formatter: "string" },
+                    { label: 'Возраст', name: 'age', width: 150, editable: true, edittype: "text", formatter: "integer", sorttype: 'integer' }
                 ],
 		        viewrecords: true,
                 width: 780,
                 height: 250,
                 rowNum: 2,
+                rowList: [2, 4, 5, 10, 15],
                 pager: "#jqGridPager",
-		        caption: 'Очень полезный реестр!'
+		        caption: 'Очень полезный реестр!',
+                loadComplete: function(data){
+                    jqGrid.jqGrid('setGridParam', {postData: {'colModel': getColModel()}})
+                }
             });
 
             jqGrid.jqGrid('bindKeys');
@@ -107,6 +124,17 @@
                 }
             });
         });
+
+        function getColModel() {
+            var cols = $("#jqGrid").jqGrid('getGridParam',"colModel");
+            var typeDict = {};
+            for (var i = 0; i < cols.length; i++) {
+                typeDict[cols[i].name] = cols[i].formatter;
+            }
+            /*console.log(JSON.stringify(typeDict));
+            console.log(JSON.stringify($("#jqGrid").jqGrid('getGridParam',"colModel")));*/
+            return JSON.stringify(typeDict);
+        }
    </script>
     <!-- End of code related to code tabs -->
 </body>
