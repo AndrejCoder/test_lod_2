@@ -25,7 +25,14 @@ class JqGridListModelMixin(mixins.ListModelMixin):
         'desc': '-%s'
     }
 
+    def formatted_order(self, request):
+        request.query_params._mutable = True
+        request.query_params.update({"ordering": self.ORDER_DIRECTION.get(request.query_params.get("sord")) % request.query_params.get("sidx")})
+        request.query_params._mutable = False
+        return request
+
     def list(self, request, *args, **kwargs):
+        request = self.formatted_order(request)
         return super().list(request, *args, **kwargs)
 
 

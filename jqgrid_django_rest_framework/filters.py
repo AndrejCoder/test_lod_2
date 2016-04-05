@@ -1,6 +1,6 @@
 import json
 
-from rest_framework.filters import DjangoFilterBackend
+from rest_framework.filters import DjangoFilterBackend, OrderingFilter
 
 
 class JqGridDjangoFilterBackend(DjangoFilterBackend):
@@ -76,3 +76,23 @@ class JqGridDjangoFilterBackend(DjangoFilterBackend):
             queryset = queryset.extra(where=[sql_query])
 
         return super().filter_queryset(request, queryset, view)
+
+
+class JqGridOrderingFilter(OrderingFilter):
+
+    def filter_queryset(self, request, queryset, view):
+        ordering = self.get_ordering(request, queryset, view)
+        if ordering:
+            ordering_sql = list()
+            for order_field in ordering:
+                direction = ''
+                if order_field.startswith('-'):
+                    direction = 'DESC'
+                if list(order_field)[0] == '-':
+                    order_field = order_field[1:]
+                ordering_sql.append(view.JSON_FIELD + '::json->>\'' + order_field + '\' ' + direction)
+            return queryset.extra(order_by=tuple(ordering_sql))
+
+        return queryset
+
+
