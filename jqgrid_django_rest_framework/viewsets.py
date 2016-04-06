@@ -32,7 +32,7 @@ class JqGridListModelMixin(mixins.ListModelMixin):
         return request
 
     def list(self, request, *args, **kwargs):
-        request = self.formatted_order(request)
+        # request = self.formatted_order(request)
         return super().list(request, *args, **kwargs)
 
 
