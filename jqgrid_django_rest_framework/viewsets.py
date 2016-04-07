@@ -15,7 +15,7 @@ class JqGridGenericViewSet(GenericViewSet):
         """
         if kwargs.get('data'):
             kwargs['data'] = self.modify_request_data(kwargs.get('data'))
-        return super().get_serializer(*args, **kwargs)
+        return super(JqGridGenericViewSet, self).get_serializer(*args, **kwargs)
 
 
 class JqGridListModelMixin(mixins.ListModelMixin):
@@ -33,7 +33,7 @@ class JqGridListModelMixin(mixins.ListModelMixin):
 
     def list(self, request, *args, **kwargs):
         # request = self.formatted_order(request)
-        return super().list(request, *args, **kwargs)
+        return super(JqGridListModelMixin, self).list(request, *args, **kwargs)
 
 
 class JqGridModelViewSet(mixins.CreateModelMixin,

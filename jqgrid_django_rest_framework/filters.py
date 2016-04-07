@@ -76,7 +76,7 @@ class JqGridDjangoFilterBackend(DjangoFilterBackend):
             sql_query = group_op.join(filter_list)
             queryset = queryset.extra(where=[sql_query])
 
-        return super().filter_queryset(request, queryset, view)
+        return super(JqGridDjangoFilterBackend, self).filter_queryset(request, queryset, view)
 
 
 class JqGridOrderingFilter(OrderingFilter):
