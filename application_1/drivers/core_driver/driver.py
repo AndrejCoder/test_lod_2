@@ -1,6 +1,6 @@
 # coding: utf-8
 import json
-from urllib.parse import urlencode
+from urllib import urlencode
 
 import requests
 from rest_framework.reverse import reverse
