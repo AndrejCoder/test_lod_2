@@ -6,3 +6,8 @@ from django.db import models
 class Registry(models.Model):
 
     json_data = JSONField()
+
+
+class ActivityPlace(models.Model):
+
+    json_data = JSONField()
