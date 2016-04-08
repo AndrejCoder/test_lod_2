@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'application_1',
     'jqgrid_django_rest_framework',
     'registries',
+    'reqs',
     'rest_framework',
     'rest_framework_swagger',
     'corsheaders'

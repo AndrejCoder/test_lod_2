@@ -46,19 +46,19 @@ class JqGridModelViewSet(mixins.CreateModelMixin,
     A viewset that provides default `create()`, `retrieve()`, `update()`,
     `partial_update()`, `destroy()` and `list()` actions.
     """
-    JSON_FIELD = 'json_data'
-    NO_JSON_FIELDS = ['id', ]
+    json_field = 'json_data'
+    no_json_fields = ['id', ]
 
     def modify_request_data(self, req_data):
         request_data = req_data.dict()
         data_querydict = QueryDict('', mutable=True)
-        data_dict = {self.JSON_FIELD: {}}
-        for no_json_field in self.NO_JSON_FIELDS:
+        data_dict = {self.json_field: {}}
+        for no_json_field in self.no_json_fields:
             request_data.pop(no_json_field)
 
         if request_data.get('oper'):
             request_data.pop('oper')
-        data_dict[self.JSON_FIELD] = json.dumps(request_data)
+        data_dict[self.json_field] = json.dumps(request_data)
 
         data_querydict.update(data_dict)
 
