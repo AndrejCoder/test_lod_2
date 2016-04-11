@@ -133,5 +133,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '{0}/{1}'.format(BASE_DIR, os.path.join(os.pardir, 'static'))
 
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static". Always use forward slashes, even on Windows.CORS_ORIGIN_ALLOW_ALL = True Don't forget to use absolute paths, not relative paths.
+    os.path.join(BASE_DIR, 'common_static'),
+    # MEDIA_ROOT,
+)
 CORS_ORIGIN_ALLOW_ALL = True
