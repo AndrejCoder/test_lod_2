@@ -5,11 +5,18 @@ from reqs.models import Request, ActivityPlace
 
 
 class RequestSerializer(serializers.ModelSerializer):
+    STATUS_FIELD = 'status'
+
+
     json_data = CustomJSONField()
 
     class Meta:
         model = Request
         fields = '__all__'
+
+    def change_status(self):
+        a = self.data
+        return a
 
 
 class ActivityPlaceSerializer(serializers.ModelSerializer):
