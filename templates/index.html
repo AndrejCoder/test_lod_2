@@ -6,22 +6,6 @@
     <title>Старт</title>
 </head>
 <body>
-    <form method="get">
-    {% if reg_items and reg_items.data %}
-        <table>
-            {% for reg_item in reg_items.data %}
-            <tr>
-                <td>
-                    {{ reg_item.json_data.k2 }}
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        {{ reg_item.json_data }}
-    {% endif %}
-    <input type="submit" name="create" value="Создать" />
-    <input type="submit" name="update" value="Изменить" />
-    <input type="submit" name="update_patch" value="Изменить часть" />
-    </form>
+    <strong>Сервис работает!</strong>
 </body>
 </html>
