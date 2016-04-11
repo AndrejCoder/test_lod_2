@@ -54,7 +54,8 @@ class JqGridModelViewSet(mixins.CreateModelMixin,
         data_querydict = QueryDict('', mutable=True)
         data_dict = {self.json_field: {}}
         for no_json_field in self.no_json_fields:
-            request_data.pop(no_json_field)
+            if no_json_field in request_data:
+                request_data.pop(no_json_field)
 
         if request_data.get('oper'):
             request_data.pop('oper')
