@@ -5,8 +5,8 @@ from reqs.models import Request, ActivityPlace
 
 
 class RequestSerializer(serializers.ModelSerializer):
-    STATUS_FIELD = 'status'
-
+    status_field = 'status'
+    activity_places_field = 'aps'
 
     json_data = CustomJSONField()
 
@@ -14,9 +14,13 @@ class RequestSerializer(serializers.ModelSerializer):
         model = Request
         fields = '__all__'
 
-    def change_status(self):
-        a = self.data
-        return a
+    def activity_places(self, instance):
+        return instance.json_data.get(self.activity_places_field)
+
+    def change_status(self, instance):
+        instance.json_data[self.status_field] = 'old'
+        instance.save()
+        return instance
 
 
 class ActivityPlaceSerializer(serializers.ModelSerializer):

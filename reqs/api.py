@@ -32,14 +32,14 @@ class RequestViewset(ModelViewSet):
     def activity_places(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
-        return Response(serializer.data.get(self.json_field).get('aps'))
+        return Response(serializer.activity_places(instance))
 
-    @detail_route(methods=['patch'])
+    @detail_route(methods=['get'])
     def change_status(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+        serializer = self.get_serializer(instance)
+        # serializer.is_valid(raise_exception=True)
+        serializer.change_status(instance)
         return Response(serializer.data)
 
 
