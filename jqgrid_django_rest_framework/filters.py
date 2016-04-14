@@ -8,7 +8,7 @@ class JqGridDjangoFilterBackend(DjangoFilterBackend):
     """
     Адаптер фильтрации JqGrid для Django REST Framework
     """
-    LOOKUPS_JQGRID = {
+    lookups_jqgrid = {
         'eq': {'op': ' = ', 'value': '%s'},
         'ne': {'op': ' != ', 'value': '%s'},
         'bw': {'op': ' ILIKE ', 'value': '%s%%%%'},
@@ -27,32 +27,32 @@ class JqGridDjangoFilterBackend(DjangoFilterBackend):
         'ge': {'op': ' >= ', 'value': '%s'}
     }
 
-    TYPE_FORMAT = {
+    type_format = {
         'string': '%s',
         'date': 'TO_DATE(%s, \'dd.mm.yyyy\')',
         'integer': 'TO_NUMBER(%s, \'9999999999999999999\')'
     }
 
-    UPPER_OPS = ('eq', 'ne')
+    upper_ops = ('eq', 'ne')
 
     def formatted_wq(self, parameter, field, col_model, op=None):
-        if op and op in self.UPPER_OPS and col_model.get(field) == 'string':
+        if op and op in self.upper_ops and col_model.get(field) == 'string':
             parameter = 'UPPER(' + parameter + ')'
-        return self.TYPE_FORMAT.get(col_model.get(field)) % parameter
+        return self.type_format.get(col_model.get(field)) % parameter
 
     def left_where_query(self, filter_rule, view, col_model):
-        lwq = view.JSON_FIELD + '::json->>\'' + filter_rule.get('field') + '\''
+        lwq = view.json_field + '::json->>\'' + filter_rule.get('field') + '\''
         lwq = self.formatted_wq(lwq, filter_rule.get('field'), col_model, filter_rule.get('op'))
         return lwq
 
     def op_where_query(self, filter_rule):
-        return self.LOOKUPS_JQGRID.get(filter_rule.get('op')).get('op')
+        return self.lookups_jqgrid.get(filter_rule.get('op')).get('op')
 
     def right_where_query(self, filter_rule, col_model):
         rwq = filter_rule.get('data')
         if filter_rule.get('op') in ('nu', 'nn'):
             rwq = ''
-        rwq = self.LOOKUPS_JQGRID.get(filter_rule.get('op')).get('value') % rwq
+        rwq = self.lookups_jqgrid.get(filter_rule.get('op')).get('value') % rwq
         if filter_rule.get('op') not in ('nu', 'nn'):
             rwq = '\'' + rwq + '\''
         rwq = self.formatted_wq(rwq, filter_rule.get('field'), col_model, filter_rule.get('op'))
@@ -91,7 +91,7 @@ class JqGridOrderingFilter(OrderingFilter):
                     direction = 'DESC'
                 if list(order_field)[0] == '-':
                     order_field = order_field[1:]
-                ordering_sql.append(view.JSON_FIELD + '::json->>\'' + order_field + '\' ' + direction)
+                ordering_sql.append(view.json_field + '::json->>\'' + order_field + '\' ' + direction)
             return queryset.extra(order_by=tuple(ordering_sql))
 
         return queryset
