@@ -5,8 +5,11 @@ django-filter
 djangorestframework
 django-rest-swagger
 django-cors-headers
+django-rest-auth
+django-allauth
 pip
 psycopg2
 requests
 setuptools
 wheel
+six

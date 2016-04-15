@@ -38,12 +38,21 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'application_1',
     'jqgrid_django_rest_framework',
     'registries',
     'reqs',
+    'authentication',
+    # 'oauth2_provider',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
     'rest_framework_swagger',
     'corsheaders'
 )
@@ -103,9 +112,21 @@ DATABASES = {
     # },
 }
 
+# OAUTH2_PROVIDER = {
+#     # this is the list of available scopes
+#     'SCOPES': {'read': 'Read scope', 'write': 'Write scope', 'groups': 'Access to your groups'}
+# }
+
 REST_FRAMEWORK = {
     # 'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
-    'PAGE_SIZE': 20
+    'PAGE_SIZE': 20,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 DATE_INPUT_FORMATS = ['%d.%m.%Y', '%Y-%m-%d']
@@ -140,4 +161,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'common_static'),
     # MEDIA_ROOT,
 )
+
+SITE_ID = 1
+
 CORS_ORIGIN_ALLOW_ALL = True

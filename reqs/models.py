@@ -10,6 +10,6 @@ class Request(models.Model):
 
 class ActivityPlace(models.Model):
 
-    request = models.ForeignKey(Request, verbose_name="Заявление")
+    request = models.ForeignKey(Request, verbose_name="Заявление", related_name='aps')
 
     json_data = JSONField()

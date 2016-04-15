@@ -26,6 +26,10 @@ urlpatterns = [
     url(r'^registries/', include('registries.urls')),
 
     url(r'^requests/', include('reqs.urls')),
+    url(r'^authentication/', include('authentication.urls')),
 
-    url(r'^docs/', include('rest_framework_swagger.urls'))
+    url(r'^docs/', include('rest_framework_swagger.urls')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    url(r'^account/', include('allauth.urls')),
 ]
