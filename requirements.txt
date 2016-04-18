@@ -5,8 +5,7 @@ django-filter
 djangorestframework
 django-rest-swagger
 django-cors-headers
-django-rest-auth
-django-allauth
+djangorestframework-oauth
 pip
 psycopg2
 requests

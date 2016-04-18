@@ -44,15 +44,12 @@ INSTALLED_APPS = (
     'jqgrid_django_rest_framework',
     'registries',
     'reqs',
-    'authentication',
-    # 'oauth2_provider',
+    # 'authentication',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth',
-
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
+    'oauth_provider',
+    'provider',
+    'provider.oauth2',
     'rest_framework_swagger',
     'corsheaders'
 )
@@ -121,8 +118,9 @@ REST_FRAMEWORK = {
     # 'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',),
     'PAGE_SIZE': 20,
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.OAuth2Authentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

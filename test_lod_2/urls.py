@@ -29,7 +29,5 @@ urlpatterns = [
     url(r'^authentication/', include('authentication.urls')),
 
     url(r'^docs/', include('rest_framework_swagger.urls')),
-    url(r'^rest-auth/', include('rest_auth.urls')),
-    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
-    url(r'^account/', include('allauth.urls')),
+    url(r'^oauth2/', include('provider.oauth2.urls', namespace='oauth2')),
 ]
